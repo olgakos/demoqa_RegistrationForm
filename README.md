@@ -5,7 +5,7 @@ for the Python 4 course
 ## Описание проекта:
 Пример последовательной эволюции автотеста от простого линейного кода до применения принципов модульной парадигмы (Page Objects). 
 <br>Branch main: Starter
-<br>Branch first: Easy test
+<br><b>Branch first: Easy test</b>
 <br>Branch page_objects: Page Objects
 
 ## Тестируемое веб-приложение:
