@@ -66,6 +66,7 @@ def test_student_registration_form():
 
     '''
     #  or
+    # browser.execute_script("window.scrollBy(0, 500)")
     browser.element('#react-select-3-input').should(be.blank).type('NCR').press_enter()
     browser.element('#react-select-4-input').should(be.blank).type('Delhi').press_enter()
     #  or
@@ -73,7 +74,7 @@ def test_student_registration_form():
     browser.element("#state").should(be.clickable).click()
     browser.element('//div[text()="NCR"]').should(be.clickable).click()
     browser.element("#city").should(be.clickable).click()
-    browser.element('//div[text()="Delhi"]').should(be.clickable).click()
+    browser.element('//div[text()="Delhi"]').should(be.clickable).click()   
     '''
 
     #Submit Button
