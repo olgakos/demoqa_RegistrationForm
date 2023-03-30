@@ -47,7 +47,7 @@ def test_student_registration_form():
         os.path.abspath(os.path.join(os.path.dirname(tests.__file__), 'resources/foto.jpg')
         )
     )
-    # browser.element("#uploadPicture").send_keys(os.getcwd() + '/Rex-Whistler.webp') #only if the photo is in the same folder as the test
+    # browser.element("#uploadPicture").send_keys(os.getcwd() + '/rex-whistler.jpg') #only if the photo is in the same folder as the test
 
     #Current Address
     browser.element('#currentAddress').type('Moscowskaya Street 16')
