@@ -1,10 +1,9 @@
 from selene.support.shared import browser
-from pathlib import Path
 from selene import have, be
 from selene import command
 import os
+
 import tests
-from tests import resources
 
 def test_student_registration_form():
     #Open
@@ -23,9 +22,12 @@ def test_student_registration_form():
     browser.element('#lastName').type('Kos')
     browser.element('#userEmail').type('kos@example.com')
     browser.all('[name=gender]').element_by(have.value('Female')).element('..').click()
+    # browser.element('[for="gender-radio-2"]').should(be.clickable).click()
     browser.element('#userNumber').type('0123456789')
+    # browser.element("#userNumber").should(be.blank).type("0123456789")
 
     #Calendar
+    # browser.execute_script("window.scrollBy(0, 500)")
     browser.element('#dateOfBirthInput').click()
     browser.element('.react-datepicker__month-select').type('April')
     browser.element('.react-datepicker__year-select').type('1995')
@@ -45,13 +47,12 @@ def test_student_registration_form():
         os.path.abspath(os.path.join(os.path.dirname(tests.__file__), 'resources/foto.jpg')
         )
     )
-    #browser.element('#uploadPicture').send_keys(os.getcwd() + '/foto.jpg') #only if the photo is in the same folder as the test
+    # browser.element("#uploadPicture").send_keys(os.getcwd() + '/Rex-Whistler.webp') #only if the photo is in the same folder as the test
 
     #Current Address
     browser.element('#currentAddress').type('Moscowskaya Street 16')
 
     #State and City
-
     browser.element('#state').perform(command.js.scroll_into_view) #!
     browser.element('#state').click()
     browser.all('[id^=react-select][id*=option]').element_by(
@@ -63,15 +64,27 @@ def test_student_registration_form():
         have.exact_text('Delhi')
     ).click()
 
-    # browser.execute_script("window.scrollBy(0, 500)")
-    # browser.element('#react-select-3-input').should(be.blank).type('NCR').press_enter()
-    # browser.element('#react-select-4-input').should(be.blank).type('Delhi').press_enter()
+    '''
+    #  or
+    browser.element('#react-select-3-input').should(be.blank).type('NCR').press_enter()
+    browser.element('#react-select-4-input').should(be.blank).type('Delhi').press_enter()
+    #  or
+    browser.execute_script("window.scrollBy(0, 500)")
+    browser.element("#state").should(be.clickable).click()
+    browser.element('//div[text()="NCR"]').should(be.clickable).click()
+    browser.element("#city").should(be.clickable).click()
+    browser.element('//div[text()="Delhi"]').should(be.clickable).click()
+    '''
 
     #Submit Button
     browser.element('#submit').perform(command.js.click)
 
     # THEN
+    browser.element("#example-modal-sizes-title-lg").should(have.text("Thanks for submitting the form"))
+
+    # check_result
     browser.element('.table').all('td').even.should(
+    # browser.all(".table-responsive td").by(
         have.exact_texts(
         'Olga Kos',
         'kos@example.com',
