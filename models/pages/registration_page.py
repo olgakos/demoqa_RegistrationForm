@@ -3,9 +3,8 @@ import os
 from selene import be, have
 from selene.support.shared import browser
 from selene import command
+from data.users import User
 
-import tests
-from tests import resources
 
 class RegistrationPage:
 
@@ -19,12 +18,10 @@ class RegistrationPage:
             have.size_greater_than_or_equal(3)
         )
         browser.all('[id^=google_ads][id$=container__]').perform(command.js.remove)
-
         # var2:
         # browser.element('footer').execute_script('element.remove()')
 
         return self
-
 
     def type_first_name(self, value):
         browser.element('#firstName').should(be.blank).type(value)
@@ -73,7 +70,8 @@ class RegistrationPage:
 
     def picture_path(self, file_name):
         return str(
-            browser.element('#uploadPicture').send_keys(os.getcwd() + file_name)  # only if the photo is in the same folder as the test
+            browser.element('#uploadPicture').send_keys(os.getcwd() + file_name)
+            # only if the photo is in the same folder as the test
             # or
             # browser.element('#uploadPicture').set_value(os.path.abspath(os.path.join(os.path.dirname(tests.__file__), 'resources/' + file_name))) # Photo from /resources
         )
@@ -98,6 +96,11 @@ class RegistrationPage:
         '''
         return self
 
+    #Кнопка загрузки
+    def click_submit(self):
+        browser.element('#submit').perform(command.js.click)
+        return self
+
     def should_registered_user_with(self,
                                     full_name,
                                     email,
@@ -120,4 +123,20 @@ class RegistrationPage:
                              photo,
                              address,
                              state_and_city))
+        return self
+
+
+    def user_registration(self, user: User):
+        self.type_first_name(user.first_name)
+        self.type_last_name(user.last_name)
+        self.type_email(user.email)
+        self.choose_gender(user.gender)
+        self.type_number(user.number)
+        self.type_date_of_birth(user.month_of_birth, user.year_of_birth, user.day_of_birth)
+        self.type_subjects(user.subjects)
+        self.choose_hobbies(user.hobbies)
+        self.picture_path(user.picture)
+        self.type_address(user.address)
+        self.choose_state_and_city(user.state, user.city)
+        self.click_submit()
         return self
